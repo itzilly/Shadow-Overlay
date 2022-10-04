@@ -3,6 +3,11 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Maven ###
+.mvn/*
+mvnw
+mvnw.cmd
+
 ### IntelliJ IDEA ###
 .idea/*
 *.iws
