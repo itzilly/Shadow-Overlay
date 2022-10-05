@@ -1,6 +1,6 @@
-package com.itzilly.shadowverlay.ui;
+package com.itzilly.shadowOverlay.ui;
 
-import com.itzilly.shadowverlay.ShadOwverlay;
+import com.itzilly.shadowOverlay.Constants;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,15 +11,14 @@ public class MainWindow extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("main-window.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Shadow Overlay " + ShadOwverlay.VERSION_SHORTHAND);
-        stage.setResizable(false);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle(Constants.WINDOW_TITLE);
         stage.show();
     }
 
-    public static void show() {
+    public static void showOverlay() {
         launch();
     }
-
 
 }

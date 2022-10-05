@@ -1,5 +1,9 @@
-package com.itzilly.shadowverlay;
+package com.itzilly.shadowOverlay;
 
+import com.itzilly.shadowOverlay.objects.GamePlayer;
+import com.itzilly.shadowOverlay.ui.MainWindowController;
+
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -27,7 +31,23 @@ public class LogTailer implements Runnable {
     }
 
 
+    private boolean isInvalidLog(String logPath) {
+        File file = new File(logPath);
+        if (file.exists() && file.isFile()) {
+            return false;
+        }
+        return true;
+    }
+
+
     private void runTrailer() throws IOException {
+        System.out.println("Running Trailer");
+        if (isInvalidLog(Constants.LOG_LOCATION)) {
+            shouldRun = false;
+            System.out.println("Invalid log file: " + Constants.LOG_LOCATION);
+            return;
+        }
+
         BufferedReader bufferedReader = new BufferedReader(new FileReader(Constants.LOG_LOCATION));
         LocalTime timeOpened = LocalTime.now();
         boolean hasProcessed = false;
@@ -69,7 +89,9 @@ public class LogTailer implements Runnable {
                 String playername = player.trim();
                 players.add(playername);
                 System.out.println(playername);
-                
+                MainWindowController mainWindowController = new MainWindowController();
+                mainWindowController.addPlayerToList(new GamePlayer(playername));
+
             }
             UUID onlineMessageUuid = UUID.randomUUID();
             // MyStatsify.mostRecentOnlineUuid = onlineMessageUuid;
@@ -86,6 +108,7 @@ public class LogTailer implements Runnable {
         // New Api Key
         else if (content.startsWith(Constants.NEW_KEY_PREFIX)) {
             String key = content.replace(Constants.NEW_KEY_PREFIX, "").trim();
+            Constants.API_KEY = key;
             System.out.println("Using new key: '" + key);
             // MyStatsify.config.setProperty("hypixel.apikey", "thisismyapikey");
             // MyStatsify.showKey();
