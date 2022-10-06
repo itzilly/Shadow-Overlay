@@ -3,7 +3,7 @@ package com.itzilly.shadowOverlay.ui;
 import com.itzilly.shadowOverlay.Constants;
 import com.itzilly.shadowOverlay.Http;
 import com.itzilly.shadowOverlay.LogTailer;
-import com.itzilly.shadowOverlay.objects.GamePlayer;
+import com.itzilly.shadowOverlay.objects.OverlayPlayer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,11 +16,11 @@ import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
     @FXML
-    public TableView<GamePlayer> myTableView;
+    public TableView<OverlayPlayer> myTableView;
     @FXML
-    public TableColumn<GamePlayer, String> playerColumn;
+    public TableColumn<OverlayPlayer, String> playerColumn;
     @FXML
-    public TableColumn<GamePlayer, Integer> starsColumn;
+    public TableColumn<OverlayPlayer, Integer> starsColumn;
     @FXML
     public Button btnStart;
     @FXML
@@ -33,36 +33,20 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        hideStopButton();
-        playerColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, String>("Name"));
-        starsColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, Integer>("Stars"));
+        btnStop.setVisible(false);
+        // Note: "Name" below corresponds to the variable name WITHIN THE CLASS (this.name), this is NOT the name of the column title!
+        playerColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, String>("name"));
+        starsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Integer>("bedwarsLevel"));
 
-        ObservableList<GamePlayer> playersList = myTableView.getItems();
+        ObservableList<OverlayPlayer> playersList = myTableView.getItems();
         myTableView.setItems(playersList);
-    }
-
-
-    void hideStopButton() {
-        // Hides the 'Stop' button
-        btnStop.setScaleX(0);
-        btnStop.setScaleY(0);
-        btnStop.setScaleZ(0);
-    }
-
-    void showStopButton() {
-        // Show's the 'Start' button
-        btnStop.setScaleX(1);
-        btnStop.setScaleY(1);
-        btnStop.setScaleZ(1);
     }
 
 
     public void onBtnStartAction(ActionEvent actionEvent) {
         // Start Button
 
-
         Constants.API_KEY = txtbxApiKey.getText().strip();
-        // TODO: Test API Key
         if (!Http.isValidKey(Constants.API_KEY)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid API Key");
@@ -75,15 +59,24 @@ public class MainWindowController implements Initializable {
             });
             return;
         }
+        // TODO: Don't restrict user for in valid api key
+
+        /*
+        * If there isn't a key entered, don't stop the program from running, instead allow
+        * the user to type '/api new' on hypixel and then keep the program parsing lines
+        */
+
 
         // TODO: Ensure log file exists
+
+        // TODO: Add log file detection/selection
 
         Constants.LOG_LOCATION = txtbxLogPath.getText().replace('\\', '/').strip();
         Constants.LOG_TAILER = new LogTailer();
         Constants.LOG_TAILER_THREAD = new Thread(Constants.LOG_TAILER);
         Constants.LOG_TAILER_THREAD.setDaemon(true);
         Constants.LOG_TAILER_THREAD.start();
-        showStopButton();
+        btnStop.setVisible(true);
     }
 
     public void onBtnStopAction(ActionEvent actionEvent) {
@@ -92,12 +85,12 @@ public class MainWindowController implements Initializable {
         Constants.LOG_TAILER.stop();
         myTableView.getItems().clear();
 
-        hideStopButton();
+        btnStop.setVisible(false);
     }
 
-    public void addPlayerToList(GamePlayer gamePlayer) {
-        ObservableList<GamePlayer> playersList = myTableView.getItems();
-        playersList.add(gamePlayer);
+    public void addPlayerToList(OverlayPlayer overlayPlayer) {
+        ObservableList<OverlayPlayer> playersList = myTableView.getItems();
+        playersList.add(overlayPlayer);
         myTableView.setItems(playersList);
     }
 
