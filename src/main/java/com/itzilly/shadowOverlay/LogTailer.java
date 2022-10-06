@@ -85,36 +85,25 @@ public class LogTailer implements Runnable {
         // Online Message
         if (content.startsWith(Constants.LIST_MESSAGE_PREFIX)) {
             String onlineMessage = content.replace(Constants.LIST_MESSAGE_PREFIX, "");
-            List<String> players = new ArrayList<>();
             for (String player : onlineMessage.split(",")) {
                 String playername = player.trim();
-                players.add(playername);
-                System.out.println(playername);
-//                MainWindowController mainWindowController = new MainWindowController();
-//                mainWindowController.addPlayerToList(new GamePlayer(playername));
                 MainWindow.getMainController().addPlayerToList(new GamePlayer(playername));
-                //MainWindowController.addPlayerToList(new GamePlayer(playername));
 
             }
-            UUID onlineMessageUuid = UUID.randomUUID();
-            // MyStatsify.mostRecentOnlineUuid = onlineMessageUuid;
-            // MyStatsify.printPlayers(players, onlineMessageUuid);
-            // Http.printPlayerStars(players, onlineMessageUuid);
         }
 
         // '/msg .playername' in-game command
         else if (content.startsWith(Constants.PLAYER_QUERY_PREFIX)) {
             String targetPlayer = content.replace(Constants.PLAYER_QUERY_PREFIX, "").split("'")[0];
-            System.out.println("Looking up stats for: '" + targetPlayer + "'");
+            MainWindow.getMainController().addPlayerToList(new GamePlayer(targetPlayer));
         }
 
-        // New Api Key
+        // New API Key
         else if (content.startsWith(Constants.NEW_KEY_PREFIX)) {
             String key = content.replace(Constants.NEW_KEY_PREFIX, "").trim();
             Constants.API_KEY = key;
-            System.out.println("Using new key: '" + key);
-            // MyStatsify.config.setProperty("hypixel.apikey", "thisismyapikey");
-            // MyStatsify.showKey();
+            MainWindow.getMainController().txtbxApiKey.setText(key);
+            System.out.println("Using new key: " + key);
         }
     }
 
