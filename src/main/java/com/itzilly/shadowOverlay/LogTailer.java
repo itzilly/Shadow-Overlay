@@ -1,8 +1,8 @@
 package com.itzilly.shadowOverlay;
 
-import com.itzilly.shadowOverlay.objects.GamePlayer;
+import com.itzilly.shadowOverlay.objects.OverlayPlayer;
 import com.itzilly.shadowOverlay.ui.MainWindow;
-import com.itzilly.shadowOverlay.ui.MainWindowController;
+import me.kbrewster.exceptions.APIException;
 
 import java.io.File;
 import java.io.FileReader;
@@ -11,9 +11,6 @@ import java.io.BufferedReader;
 
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 
 public class LogTailer implements Runnable {
@@ -87,7 +84,11 @@ public class LogTailer implements Runnable {
             String onlineMessage = content.replace(Constants.LIST_MESSAGE_PREFIX, "");
             for (String player : onlineMessage.split(",")) {
                 String playername = player.trim();
-                MainWindow.getMainController().addPlayerToList(new GamePlayer(playername));
+                try {
+                    MainWindow.getMainController().addPlayerToList(new OverlayPlayer(playername));
+                } catch (APIException | IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         }
@@ -95,7 +96,11 @@ public class LogTailer implements Runnable {
         // '/msg .playername' in-game command
         else if (content.startsWith(Constants.PLAYER_QUERY_PREFIX)) {
             String targetPlayer = content.replace(Constants.PLAYER_QUERY_PREFIX, "").split("'")[0];
-            MainWindow.getMainController().addPlayerToList(new GamePlayer(targetPlayer));
+            try {
+                MainWindow.getMainController().addPlayerToList(new OverlayPlayer(targetPlayer));
+            } catch (APIException | IOException e) {
+                e.printStackTrace();
+            }
         }
 
         // New API Key
