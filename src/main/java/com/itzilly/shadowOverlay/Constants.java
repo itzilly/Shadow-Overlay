@@ -2,8 +2,8 @@ package com.itzilly.shadowOverlay;
 
 public class Constants {
 
-    public static String BUILD_NUMBER = "b5";
-    public static String VERSION = "A0.2.2";
+    public static String BUILD_NUMBER = "b6";
+    public static String VERSION = "A0.2.3";
     public static String VERSION_SHORTHAND = VERSION + "-" + BUILD_NUMBER;
     public static String WINDOW_TITLE = "Shadow Overlay " + VERSION_SHORTHAND;
 
