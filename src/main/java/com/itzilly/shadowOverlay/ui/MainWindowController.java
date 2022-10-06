@@ -34,34 +34,12 @@ public class MainWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         hideStopButton();
-        txtbxLogPath.setText("C:\\Users\\illyum\\.lunarclient\\offline\\multiver\\logs\\latest.log");
         playerColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, String>("Name"));
         starsColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, Integer>("Stars"));
 
-//        GamePlayer gamePlayer = new GamePlayer("illyum");
         ObservableList<GamePlayer> playersList = myTableView.getItems();
-//        playersList.add(gamePlayer);
         myTableView.setItems(playersList);
-
-//        GamePlayer illyum = new GamePlayer("illyum", 872);
-//        ObservableList<GamePlayer> players = myTableView.getItems();
-//        players.add(illyum);
-//        myTableView.setItems(players);
-
     }
-
-//    public MainWindowController() {
-//        hideStopButton();
-//        txtbxLogPath.setText("C:\\Users\\illyum\\.lunarclient\\offline\\multiver\\logs\\latest.log");
-//        playerColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, String>("Name"));
-//        starsColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, Integer>("Stars"));
-//
-//        GamePlayer gamePlayer = new GamePlayer("illyum");
-//        ObservableList<GamePlayer> playersList = myTableView.getItems();
-//        playersList.add(gamePlayer);
-//        myTableView.setItems(playersList);
-//
-//    }
 
 
     void hideStopButton() {
