@@ -1,16 +1,14 @@
 package com.itzilly.shadowOverlay.ui;
 
 import com.itzilly.shadowOverlay.Constants;
+import com.itzilly.shadowOverlay.Http;
 import com.itzilly.shadowOverlay.LogTailer;
 import com.itzilly.shadowOverlay.objects.GamePlayer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -84,9 +82,24 @@ public class MainWindowController implements Initializable {
     public void onBtnStartAction(ActionEvent actionEvent) {
         // Start Button
 
-        // TODO: Test API Key
-        // TODO: Ensure log file exists
+
         Constants.API_KEY = txtbxApiKey.getText().strip();
+        // TODO: Test API Key
+        if (!Http.isValidKey(Constants.API_KEY)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid API Key");
+            alert.setHeaderText("You have entered an invalid API key!");
+            alert.setContentText("Shadow Overlay will not work without a valid key");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK) {
+                    return;
+                }
+            });
+            return;
+        }
+
+        // TODO: Ensure log file exists
+
         Constants.LOG_LOCATION = txtbxLogPath.getText().replace('\\', '/').strip();
         Constants.LOG_TAILER = new LogTailer();
         Constants.LOG_TAILER_THREAD = new Thread(Constants.LOG_TAILER);
