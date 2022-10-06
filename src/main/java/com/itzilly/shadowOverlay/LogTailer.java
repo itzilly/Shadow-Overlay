@@ -1,6 +1,7 @@
 package com.itzilly.shadowOverlay;
 
 import com.itzilly.shadowOverlay.objects.GamePlayer;
+import com.itzilly.shadowOverlay.ui.MainWindow;
 import com.itzilly.shadowOverlay.ui.MainWindowController;
 
 import java.io.File;
@@ -89,8 +90,10 @@ public class LogTailer implements Runnable {
                 String playername = player.trim();
                 players.add(playername);
                 System.out.println(playername);
-                MainWindowController mainWindowController = new MainWindowController();
-                mainWindowController.addPlayerToList(new GamePlayer(playername));
+//                MainWindowController mainWindowController = new MainWindowController();
+//                mainWindowController.addPlayerToList(new GamePlayer(playername));
+                MainWindow.getMainController().addPlayerToList(new GamePlayer(playername));
+                //MainWindowController.addPlayerToList(new GamePlayer(playername));
 
             }
             UUID onlineMessageUuid = UUID.randomUUID();
