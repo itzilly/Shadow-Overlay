@@ -40,9 +40,9 @@ public class MainWindowController implements Initializable {
         playerColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, String>("Name"));
         starsColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, Integer>("Stars"));
 
-        GamePlayer gamePlayer = new GamePlayer("illyum");
+//        GamePlayer gamePlayer = new GamePlayer("illyum");
         ObservableList<GamePlayer> playersList = myTableView.getItems();
-        playersList.add(gamePlayer);
+//        playersList.add(gamePlayer);
         myTableView.setItems(playersList);
 
 //        GamePlayer illyum = new GamePlayer("illyum", 872);
@@ -52,18 +52,18 @@ public class MainWindowController implements Initializable {
 
     }
 
-    public MainWindowController() {
-        hideStopButton();
-        txtbxLogPath.setText("C:\\Users\\illyum\\.lunarclient\\offline\\multiver\\logs\\latest.log");
-        playerColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, String>("Name"));
-        starsColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, Integer>("Stars"));
-
-        GamePlayer gamePlayer = new GamePlayer("illyum");
-        ObservableList<GamePlayer> playersList = myTableView.getItems();
-        playersList.add(gamePlayer);
-        myTableView.setItems(playersList);
-
-    }
+//    public MainWindowController() {
+//        hideStopButton();
+//        txtbxLogPath.setText("C:\\Users\\illyum\\.lunarclient\\offline\\multiver\\logs\\latest.log");
+//        playerColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, String>("Name"));
+//        starsColumn.setCellValueFactory(new PropertyValueFactory<GamePlayer, Integer>("Stars"));
+//
+//        GamePlayer gamePlayer = new GamePlayer("illyum");
+//        ObservableList<GamePlayer> playersList = myTableView.getItems();
+//        playersList.add(gamePlayer);
+//        myTableView.setItems(playersList);
+//
+//    }
 
 
     void hideStopButton() {
@@ -79,6 +79,7 @@ public class MainWindowController implements Initializable {
         btnStop.setScaleY(1);
         btnStop.setScaleZ(1);
     }
+
 
     public void onBtnStartAction(ActionEvent actionEvent) {
         // Start Button
@@ -98,6 +99,8 @@ public class MainWindowController implements Initializable {
         // Stop Button
 
         Constants.LOG_TAILER.stop();
+        myTableView.getItems().clear();
+
         hideStopButton();
     }
 
