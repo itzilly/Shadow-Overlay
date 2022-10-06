@@ -1,5 +1,8 @@
 package com.itzilly.shadowOverlay;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class Constants {
 
     public static String BUILD_NUMBER = "b7";
@@ -16,4 +19,8 @@ public class Constants {
 
     public static LogTailer LOG_TAILER = null;
     public static Thread LOG_TAILER_THREAD = null;
+
+    public static String RECENTLY_SEARCHED_ERMSG = "You have already looked up this name recently";
+
+    public static HashMap<String, UUID> UUID_CACHE = new HashMap<>();
 }
