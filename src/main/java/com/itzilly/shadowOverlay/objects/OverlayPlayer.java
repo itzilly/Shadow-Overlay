@@ -51,6 +51,37 @@ public class OverlayPlayer {
 
     }
 
+    public OverlayPlayer(UUID uuid) throws APIException, IOException {
+        // TODO: Improve Memory Efficiency (use int instead of long)
+
+        HypixelAPI hypixelAPI = new HypixelAPI(Constants.API_KEY);
+        String uuidPattern = "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)";
+        HypixelPlayer hypixelPlayer = hypixelAPI.getPlayer(uuid);
+        this.uuid = UUID.fromString(hypixelPlayer.getUuid().replaceFirst(uuidPattern, "$1-$2-$3-$4-$5"));
+        this.bedwarsLevel = hypixelPlayer.getAchievements().getBedwarsLevel();
+        this.finalKills = hypixelPlayer.getStats().getBedwars().getFinalKillsBedwars();
+        long finalDeaths = hypixelPlayer.getStats().getBedwars().getFinalDeathsBedwars();
+        // TODO: Optimize (if finalDeaths == 1 fkdr = finalKills) for ALL below
+        if (finalDeaths == 0) {
+            finalDeaths = 1L;
+        }
+        this.fkdr = (double) (this.finalKills / finalDeaths);
+        long wins = hypixelPlayer.getStats().getBedwars().getWinsBedwars();
+        long losses = hypixelPlayer.getStats().getBedwars().getLossesBedwars();
+        if (losses == 0) {
+            losses = 1;
+        }
+        this.wlr = (double) (wins / losses);
+        long bedBreaks = hypixelPlayer.getStats().getBedwars().getBedsBrokenBedwars();
+        long bedLosses = hypixelPlayer.getStats().getBedwars().getBedsLostBedwars();
+        if  (bedLosses == 0) {
+            bedLosses = 1L;
+        }
+        this.bblr = (double) (bedBreaks / bedLosses);
+        this.winstreak = hypixelPlayer.getStats().getBedwars().getWinstreak();
+
+    }
+
     public String getName() {
         return name;
     }
