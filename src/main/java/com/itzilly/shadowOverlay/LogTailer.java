@@ -3,7 +3,8 @@ package com.itzilly.shadowOverlay;
 import com.itzilly.shadowOverlay.objects.OnlinePlayersList;
 import com.itzilly.shadowOverlay.objects.OverlayPlayer;
 import com.itzilly.shadowOverlay.ui.MainWindow;
-import com.sun.tools.javac.Main;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import me.kbrewster.exceptions.APIException;
 
 import java.io.File;
@@ -46,6 +47,15 @@ public class LogTailer implements Runnable {
         System.out.println("Running Trailer");
         if (isInvalidLog(Constants.LOG_LOCATION)) {
             shouldRun = false;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Log File");
+            alert.setHeaderText("You have entered an invalid log file!");
+            alert.setContentText("Shadow Overlay will not work without a valid log file");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK) {
+                    return;
+                }
+            });
             System.out.println("Invalid log file: " + Constants.LOG_LOCATION);
             return;
         }
