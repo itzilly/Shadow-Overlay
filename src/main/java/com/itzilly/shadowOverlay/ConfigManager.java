@@ -10,14 +10,13 @@ public class ConfigManager {
 
     public ConfigManager() {
         File configPath = new File("config/config.properties");
-        YamlConfiguration config = new YamlConfiguration();
         if (!configPath.exists()) {
             createConfigFolder();
-            createConfigFile(config);
+            createConfigFile();
         }
 
         try {
-            config.load(configPath);
+            Constants.yamlConfiguration.load(configPath);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -38,21 +37,28 @@ public class ConfigManager {
 //        }
 //    }
 
-//    public void save(String key, Object object) {
-//        config.set(key, object);
-//    }
+    public void save(String key, Object object) {
+        try {
+            File configPath = new File("config/config.properties");
+            Constants.yamlConfiguration.load(configPath);
+            Constants.yamlConfiguration.set(key, object);
+            Constants.yamlConfiguration.save(configPath);
+        } catch (IOException | InvalidConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private static void createConfigFolder() {
         File dir = new File("config/");
         boolean wasCreated = dir.mkdir();
     }
 
-    private static void createConfigFile(YamlConfiguration yamlConfiguration) {
+    private static void createConfigFile() {
         File path = new File("config/config.properties");
-        yamlConfiguration.set("API_KEY", "thing1");
-        yamlConfiguration.set("log_path", "thing2");
+        Constants.yamlConfiguration.set("API_KEY", "");
+        Constants.yamlConfiguration.set("log_path", "");
         try {
-            yamlConfiguration.save(path);
+            Constants.yamlConfiguration.save(path);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
