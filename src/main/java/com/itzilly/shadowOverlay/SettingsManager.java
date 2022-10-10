@@ -21,7 +21,11 @@ public class SettingsManager {
 
     }
     public String getApiKey() {
-        return Constants.MAIN_CONFIG.getProperty("API_KEY");
+        String key = Constants.MAIN_CONFIG.getProperty("API_KEY");
+        if (key.equals("null")) {
+            key = null;
+        }
+        return key;
     }
 
     public void saveApiKey(String apiKey) {
@@ -29,7 +33,11 @@ public class SettingsManager {
     }
 
     public String getLogPath() {
-        return Constants.MAIN_CONFIG.getProperty("LOG_PATH");
+        String logPath = Constants.MAIN_CONFIG.getProperty("LOG_PATH");
+        if (logPath.equals("null")) {
+            logPath = null;
+        }
+        return logPath;
     }
 
     public void saveLogPath(String logPath) {
@@ -46,8 +54,8 @@ public class SettingsManager {
         try {
             boolean wasCreated = mainConfig.createNewFile();
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(mainConfig));
-            bufferedWriter.write("API_KEY=null");
-            bufferedWriter.write("LOG_PATH=null");
+            bufferedWriter.write("API_KEY=" + null + "\n");
+            bufferedWriter.write("LOG_PATH=" + null + "\n");
             bufferedWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
