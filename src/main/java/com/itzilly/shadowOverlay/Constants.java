@@ -1,6 +1,7 @@
 package com.itzilly.shadowOverlay;
 
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.UUID;
 
 public class Constants {
@@ -23,4 +24,9 @@ public class Constants {
     public static String RECENTLY_SEARCHED_ERMSG = "You have already looked up this name recently";
 
     public static HashMap<String, UUID> UUID_CACHE = new HashMap<>();
+
+    public static SettingsManager SETTINGS_MANAGER = null;
+    public static String CONFIG_DIR_PATH = "config/";
+    public static String CONFIG_FILE_PATH = CONFIG_DIR_PATH + "config.properties";
+    public static Properties MAIN_CONFIG = null;
 }
