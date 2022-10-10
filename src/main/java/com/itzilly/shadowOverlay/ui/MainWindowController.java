@@ -40,6 +40,19 @@ public class MainWindowController implements Initializable {
 
         ObservableList<OverlayPlayer> playersList = myTableView.getItems();
         myTableView.setItems(playersList);
+
+        String lastKey = Constants.SETTINGS_MANAGER.getApiKey();
+        if (lastKey == null) {
+            lastKey = "";
+        }
+
+        String lastLogPath = Constants.SETTINGS_MANAGER.getLogPath();
+        if (lastLogPath == null) {
+            lastLogPath = "";
+        }
+
+        txtbxApiKey.setText(lastKey);
+        txtbxLogPath.setText(lastLogPath);
     }
 
 
@@ -77,6 +90,9 @@ public class MainWindowController implements Initializable {
         Constants.LOG_TAILER_THREAD.setDaemon(true);
         Constants.LOG_TAILER_THREAD.start();
         btnStop.setVisible(true);
+
+        Constants.SETTINGS_MANAGER.saveApiKey(Constants.API_KEY);
+        Constants.SETTINGS_MANAGER.saveLogPath(Constants.LOG_LOCATION);
     }
 
     public void onBtnStopAction(ActionEvent actionEvent) {
