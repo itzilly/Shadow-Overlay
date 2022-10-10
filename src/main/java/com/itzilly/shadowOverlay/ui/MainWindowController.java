@@ -3,6 +3,7 @@ package com.itzilly.shadowOverlay.ui;
 import com.itzilly.shadowOverlay.Constants;
 import com.itzilly.shadowOverlay.Http;
 import com.itzilly.shadowOverlay.LogTailer;
+import com.itzilly.shadowOverlay.ShadowOverlay;
 import com.itzilly.shadowOverlay.objects.OverlayPlayer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,23 +42,17 @@ public class MainWindowController implements Initializable {
         ObservableList<OverlayPlayer> playersList = myTableView.getItems();
         myTableView.setItems(playersList);
 
-        String lastKey = Constants.SETTINGS_MANAGER.getApiKey();
-        if (lastKey == null) {
-            lastKey = "";
-        }
+        txtbxApiKey.setText(Constants.yamlConfiguration.get("API_KEY") + "");
+        txtbxLogPath.setText(Constants.yamlConfiguration.get("log_path") + "");
 
-        String lastLogPath = Constants.SETTINGS_MANAGER.getLogPath();
-        if (lastLogPath == null) {
-            lastLogPath = "";
-        }
-
-        txtbxApiKey.setText(lastKey);
-        txtbxLogPath.setText(lastLogPath);
     }
 
 
     public void onBtnStartAction(ActionEvent actionEvent) {
         // Start Button
+
+        Constants.configManager.save("API_KEY", txtbxApiKey.getText());
+        Constants.configManager.save("log_path", txtbxLogPath.getText().replace('\\', '/'));
 
         Constants.API_KEY = txtbxApiKey.getText().strip();
         if (!Http.isValidKey(Constants.API_KEY)) {
@@ -93,6 +88,9 @@ public class MainWindowController implements Initializable {
 
         Constants.SETTINGS_MANAGER.saveApiKey(Constants.API_KEY);
         Constants.SETTINGS_MANAGER.saveLogPath(Constants.LOG_LOCATION);
+
+//        ShadowOverlay.configManager.save("API_KEY", txtbxApiKey.getText().strip());
+//        ShadowOverlay.configManager.save("log_path", txtbxLogPath.getText().replace('\\', '/').strip());
     }
 
     public void onBtnStopAction(ActionEvent actionEvent) {
