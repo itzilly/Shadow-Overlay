@@ -48,6 +48,12 @@ public class OverlayPlayer {
         this.bblr = (double) (bedBreaks / bedLosses);
         this.winstreak = hypixelPlayer.getStats().getBedwars().getWinstreak();
 
+        if (Constants.UUID_CACHE.containsKey(name)) {
+            Constants.UUID_CACHE.replace(name, uuid);
+        } else {
+            Constants.UUID_CACHE.put(name, uuid);
+        }
+
     }
 
     public OverlayPlayer(UUID uuid) throws APIException, IOException {
@@ -57,6 +63,7 @@ public class OverlayPlayer {
         String uuidPattern = "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)";
         HypixelPlayer hypixelPlayer = hypixelAPI.getPlayer(uuid);
         this.uuid = UUID.fromString(hypixelPlayer.getUuid().replaceFirst(uuidPattern, "$1-$2-$3-$4-$5"));
+        this.name = hypixelPlayer.getDisplayname();
         this.bedwarsLevel = hypixelPlayer.getAchievements().getBedwarsLevel();
         this.finalKills = hypixelPlayer.getStats().getBedwars().getFinalKillsBedwars();
         long finalDeaths = hypixelPlayer.getStats().getBedwars().getFinalDeathsBedwars();
@@ -78,6 +85,12 @@ public class OverlayPlayer {
         }
         this.bblr = (double) (bedBreaks / bedLosses);
         this.winstreak = hypixelPlayer.getStats().getBedwars().getWinstreak();
+
+        if (Constants.UUID_CACHE.containsKey(name)) {
+            Constants.UUID_CACHE.replace(name, uuid);
+        } else {
+            Constants.UUID_CACHE.put(name, uuid);
+        }
 
     }
 
