@@ -53,12 +53,10 @@
             <groupId>com.github.KevinPriv</groupId>
             <artifactId>HypixelApi4J</artifactId>
             <version>API-1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bspfsystems</groupId>
-            <artifactId>yamlconfiguration</artifactId>
-            <version>1.2.2</version>
-            <scope>compile</scope>
+        </dependency><dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.33</version>
         </dependency>
     </dependencies>
 
