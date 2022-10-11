@@ -1,9 +1,6 @@
 package com.itzilly.shadowOverlay.ui;
 
-import com.itzilly.shadowOverlay.Constants;
-import com.itzilly.shadowOverlay.Http;
-import com.itzilly.shadowOverlay.LogTailer;
-import com.itzilly.shadowOverlay.ShadowOverlay;
+import com.itzilly.shadowOverlay.*;
 import com.itzilly.shadowOverlay.objects.OverlayPlayer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
@@ -39,20 +37,20 @@ public class MainWindowController implements Initializable {
         playerColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, String>("name"));
         starsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Integer>("bedwarsLevel"));
 
-        ObservableList<OverlayPlayer> playersList = myTableView.getItems();
-        myTableView.setItems(playersList);
+        YmlConfig cnf = new YmlConfig();
 
-        txtbxApiKey.setText(Constants.yamlConfiguration.get("API_KEY") + "");
-        txtbxLogPath.setText(Constants.yamlConfiguration.get("log_path") + "");
+        String key = cnf.getString("API_KEY");
+        if (key.equals("null")) { key = ""; }
+        txtbxApiKey.setText(key);
 
+        String logPath = cnf.getString("LOG_PATH");
+        if (logPath.equals("null")) { logPath = ""; }
+        txtbxLogPath.setText(logPath);
     }
 
 
     public void onBtnStartAction(ActionEvent actionEvent) {
         // Start Button
-
-        Constants.configManager.save("API_KEY", txtbxApiKey.getText());
-        Constants.configManager.save("log_path", txtbxLogPath.getText().replace('\\', '/'));
 
         Constants.API_KEY = txtbxApiKey.getText().strip();
         if (!Http.isValidKey(Constants.API_KEY)) {
@@ -86,11 +84,9 @@ public class MainWindowController implements Initializable {
         Constants.LOG_TAILER_THREAD.start();
         btnStop.setVisible(true);
 
-        Constants.SETTINGS_MANAGER.saveApiKey(Constants.API_KEY);
-        Constants.SETTINGS_MANAGER.saveLogPath(Constants.LOG_LOCATION);
-
-//        ShadowOverlay.configManager.save("API_KEY", txtbxApiKey.getText().strip());
-//        ShadowOverlay.configManager.save("log_path", txtbxLogPath.getText().replace('\\', '/').strip());
+        YmlConfig ymlConfig = new YmlConfig();
+        ymlConfig.set("API_KEY", txtbxApiKey.getText().strip());
+        ymlConfig.set("LOG_PATH", txtbxLogPath.getText().replace('\\', '/').strip());
     }
 
     public void onBtnStopAction(ActionEvent actionEvent) {
