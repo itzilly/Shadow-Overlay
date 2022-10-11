@@ -7,17 +7,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class YmlConfig {
-    private static Map<String, Object> dataMap = new LinkedHashMap<>();
-
     public YmlConfig() {
         saveDefaults();
-        dataMap = _readMap();
     }
 
     private void saveDefaults() {
         genConfigFolder();
         try {
-            _saveDefaults();
+            _saveDefaults(false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -34,9 +31,9 @@ public class YmlConfig {
         }
     }
 
-    private void _saveDefaults() throws FileNotFoundException {
+    private void _saveDefaults(boolean overwrite) throws FileNotFoundException {
         File file = new File("config/config.properties");
-        if (!file.exists()) {
+        if (!file.exists() || overwrite) {
             System.out.println("Regenerating config");
             Map<String, Object> data = new LinkedHashMap<>();
             data.put("API_KEY", "null");
@@ -83,6 +80,7 @@ public class YmlConfig {
         Map<String, Object> map;
         try {
             map = _load();
+            System.out.println("Map: " + map);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -93,6 +91,11 @@ public class YmlConfig {
     private Map<String, Object> _load() throws FileNotFoundException {
         InputStream inputStream = new FileInputStream("config/config.properties");
         Yaml yaml = new Yaml();
+        Map<String, Object> map = yaml.load(inputStream);
+        if (map == null) {
+            _saveDefaults(true);
+            return _load();
+        }
         return yaml.load(inputStream);
     }
 
