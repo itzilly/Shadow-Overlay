@@ -52,6 +52,10 @@ public class MainWindowController implements Initializable {
     public void onBtnStartAction(ActionEvent actionEvent) {
         // Start Button
 
+        YmlConfig ymlConfig = new YmlConfig();
+        ymlConfig.set("API_KEY", txtbxApiKey.getText().strip());
+        ymlConfig.set("LOG_PATH", txtbxLogPath.getText().replace('\\', '/').strip());
+
         Constants.API_KEY = txtbxApiKey.getText().strip();
         if (!Http.isValidKey(Constants.API_KEY)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -83,10 +87,6 @@ public class MainWindowController implements Initializable {
         Constants.LOG_TAILER_THREAD.setDaemon(true);
         Constants.LOG_TAILER_THREAD.start();
         btnStop.setVisible(true);
-
-        YmlConfig ymlConfig = new YmlConfig();
-        ymlConfig.set("API_KEY", txtbxApiKey.getText().strip());
-        ymlConfig.set("LOG_PATH", txtbxLogPath.getText().replace('\\', '/').strip());
     }
 
     public void onBtnStopAction(ActionEvent actionEvent) {
