@@ -7,7 +7,6 @@ import me.kbrewster.hypixelapi.player.HypixelPlayer;
 
 import java.io.IOException;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 public class OverlayPlayer {
     private String name;

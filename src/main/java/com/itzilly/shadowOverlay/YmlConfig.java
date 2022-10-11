@@ -3,10 +3,8 @@ package com.itzilly.shadowOverlay;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class YmlConfig {
     private static Map<String, Object> dataMap = new LinkedHashMap<>();
@@ -59,7 +57,7 @@ public class YmlConfig {
     }
 
     private void _set(String key, String value) throws FileNotFoundException {
-        if (value==null){
+        if (value == null){
             value = "null";
         }
 
@@ -70,8 +68,6 @@ public class YmlConfig {
             data.put(key, value);
         }
         new Yaml().dump(data, new PrintWriter("config/config.properties"));
-
-        load();
     }
 
     public void load() {

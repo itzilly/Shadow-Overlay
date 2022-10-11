@@ -7,11 +7,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import me.kbrewster.exceptions.APIException;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.BufferedReader;
-
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
