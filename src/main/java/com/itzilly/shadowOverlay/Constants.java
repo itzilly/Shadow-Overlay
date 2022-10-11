@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public class Constants {
 
-    public static String BUILD_NUMBER = "b16";
-    public static String VERSION = "A0.2.8";
+    public static String BUILD_NUMBER = "b18";
+    public static String VERSION = "A0.2.9";
     public static String VERSION_SHORTHAND = VERSION + "-" + BUILD_NUMBER;
     public static String WINDOW_TITLE = "Shadow Overlay " + VERSION_SHORTHAND;
 
