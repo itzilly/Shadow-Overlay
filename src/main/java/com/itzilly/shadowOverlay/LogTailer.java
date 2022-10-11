@@ -111,7 +111,7 @@ public class LogTailer implements Runnable {
             String key = content.replace(Constants.NEW_KEY_PREFIX, "").trim();
             Constants.API_KEY = key;
             MainWindow.getMainController().txtbxApiKey.setText(key);
-            ShadowOverlay.ymlConfig.set("API_KEY", key);
+            new YmlConfig().set("API_KEY", key);
         }
     }
 
