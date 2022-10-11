@@ -37,15 +37,19 @@ public class MainWindowController implements Initializable {
         playerColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, String>("name"));
         starsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Integer>("bedwarsLevel"));
 
-        YmlConfig cnf = new YmlConfig();
+        try {
+            YmlConfig cnf = new YmlConfig();
 
-        String key = cnf.getString("API_KEY");
-        if (key.equals("null")) { key = ""; }
-        txtbxApiKey.setText(key);
+            String key = cnf.getString("API_KEY");
+            if (key.equals("null")) { key = ""; }
+            txtbxApiKey.setText(key);
 
-        String logPath = cnf.getString("LOG_PATH");
-        if (logPath.equals("null")) { logPath = ""; }
-        txtbxLogPath.setText(logPath);
+            String logPath = cnf.getString("LOG_PATH");
+            if (logPath.equals("null")) { logPath = ""; }
+            txtbxLogPath.setText(logPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
