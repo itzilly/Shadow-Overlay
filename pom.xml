@@ -53,7 +53,8 @@
             <groupId>com.github.KevinPriv</groupId>
             <artifactId>HypixelApi4J</artifactId>
             <version>API-1.7</version>
-        </dependency><dependency>
+        </dependency>
+        <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>1.33</version>
