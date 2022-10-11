@@ -1,15 +1,13 @@
 package com.itzilly.shadowOverlay;
 
-import org.bspfsystems.yamlconfiguration.file.YamlConfiguration;
 
 import java.util.HashMap;
-import java.util.Properties;
 import java.util.UUID;
 
 public class Constants {
 
-    public static String BUILD_NUMBER = "b14";
-    public static String VERSION = "A0.2.6";
+    public static String BUILD_NUMBER = "b15";
+    public static String VERSION = "A0.2.7";
     public static String VERSION_SHORTHAND = VERSION + "-" + BUILD_NUMBER;
     public static String WINDOW_TITLE = "Shadow Overlay " + VERSION_SHORTHAND;
 
@@ -27,11 +25,4 @@ public class Constants {
 
     public static HashMap<String, UUID> UUID_CACHE = new HashMap<>();
 
-    public static SettingsManager SETTINGS_MANAGER = null;
-    public static String CONFIG_DIR_PATH = "config/";
-    public static String CONFIG_FILE_PATH = CONFIG_DIR_PATH + "config.properties";
-    public static Properties MAIN_CONFIG = null;
-
-    public static YamlConfiguration yamlConfiguration = new YamlConfiguration();
-    public static ConfigManager configManager = new ConfigManager();
 }
