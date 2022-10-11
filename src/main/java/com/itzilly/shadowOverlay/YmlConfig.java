@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class YmlConfig {
     private static Map<String, Object> dataMap = new LinkedHashMap<>();
@@ -36,12 +37,16 @@ public class YmlConfig {
     }
 
     private void _saveDefaults() throws FileNotFoundException {
-        Map<String, Object> data = new LinkedHashMap<>();
-        data.put("API_KEY", "null");
-        data.put("LOG_PATH", "null");
-        Yaml yaml = new Yaml();
-        PrintWriter printWriter = new PrintWriter("config/config.properties");;
-        yaml.dump(data, printWriter);
+        File file = new File("config/config.properties");
+        if (!file.exists()) {
+            System.out.println("Regenerating config");
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("API_KEY", "null");
+            data.put("LOG_PATH", "null");
+            Yaml yaml = new Yaml();
+            PrintWriter printWriter = new PrintWriter("config/config.properties");;
+            yaml.dump(data, printWriter);
+        }
     }
 
     public void set(String key, String value) {
@@ -97,5 +102,9 @@ public class YmlConfig {
 
     public String getString(String key) {
         return _readMap().get(key).toString();
+    }
+
+    public Object get(String key) {
+        return _readMap().get(key);
     }
 }
