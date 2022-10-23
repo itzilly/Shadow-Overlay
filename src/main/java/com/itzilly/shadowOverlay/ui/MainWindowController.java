@@ -8,12 +8,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.ini4j.Ini;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
+
+    private Ini readIni;
+    private Ini writeIni;
+    private String log_path;
+    private String api_key;
+
+
     @FXML
     public TableView<OverlayPlayer> myTableView;
     @FXML
@@ -28,37 +39,50 @@ public class MainWindowController implements Initializable {
     public TextField txtbxLogPath;
     @FXML
     public Button btnStop;
+    private final String config_path = "config/config.properties";
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadConfig();
+
         btnStop.setVisible(false);
         // Note: "Name" below corresponds to the variable name WITHIN THE CLASS (this.name), this is NOT the name of the column title!
         playerColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, String>("name"));
         starsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Integer>("bedwarsLevel"));
 
+        txtbxApiKey.setText(api_key);
+        txtbxLogPath.setText(log_path);
+
+    }
+
+    private void loadConfig() {
+        readIni = new Ini();
         try {
-            YmlConfig cnf = new YmlConfig();
-
-            String key = cnf.getString("API_KEY");
-            if (key.equals("null")) { key = ""; }
-            txtbxApiKey.setText(key);
-
-            String logPath = cnf.getString("LOG_PATH");
-            if (logPath.equals("null")) { logPath = ""; }
-            txtbxLogPath.setText(logPath);
-        } catch (Exception e) {
+            readIni.load(new FileReader(config_path));
+        } catch (IOException e) {
             e.printStackTrace();
+            log_path = "";
+            api_key = "";
         }
+        api_key = readIni.get("GENERAL", "API_KEY", String.class);
+        log_path = readIni.get("GENERAL", "LOG_PATH", String.class);
     }
 
 
     public void onBtnStartAction(ActionEvent actionEvent) {
         // Start Button
 
-        YmlConfig ymlConfig = new YmlConfig();
-        ymlConfig.set("API_KEY", txtbxApiKey.getText().strip());
-        ymlConfig.set("LOG_PATH", txtbxLogPath.getText().replace('\\', '/').strip());
+
+        writeIni = new Ini();
+        writeIni.put("GENERAL", "API_KEY", txtbxApiKey.getText().strip());
+        writeIni.put("GENERAL", "LOG_PATH", txtbxLogPath.getText().replace('\\', '/').replace("\"", ""));
+        try {
+            writeIni.store(new FileOutputStream(config_path));
+            System.out.println("Written!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         Constants.API_KEY = txtbxApiKey.getText().strip();
         if (!Http.isValidKey(Constants.API_KEY)) {
