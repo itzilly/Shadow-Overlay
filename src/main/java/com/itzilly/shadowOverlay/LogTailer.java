@@ -6,11 +6,9 @@ import com.itzilly.shadowOverlay.ui.MainWindow;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import me.kbrewster.exceptions.APIException;
+import org.ini4j.Ini;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -110,7 +108,13 @@ public class LogTailer implements Runnable {
             String key = content.replace(Constants.NEW_KEY_PREFIX, "").trim();
             Constants.API_KEY = key;
             MainWindow.getMainController().txtbxApiKey.setText(key);
-            new YmlConfig().set("API_KEY", key);
+            Ini writeIni = new Ini();
+            writeIni.put("GENERAL", "API_KEY", key);
+            try {
+                writeIni.store(new FileOutputStream("config/config.properties"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
