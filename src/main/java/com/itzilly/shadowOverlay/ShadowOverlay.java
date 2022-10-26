@@ -3,26 +3,32 @@ package com.itzilly.shadowOverlay;
 import com.itzilly.shadowOverlay.ui.MainWindow;
 import org.ini4j.Ini;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 
 public class ShadowOverlay {
     public static void main(String[] args) {
+        boolean couldSetStream = false;
         try {
             System.setOut(new PrintStream(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + "latest.out")));
             System.setErr(new PrintStream(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + "latest.err")));
+            couldSetStream = true;
         } catch (IOException e) {
-            if (e.getMessage().endsWith("(The system cannot find the path specified)")) {
-                boolean firstTime = true;
-            }
             e.printStackTrace();
         }
 
         boolean createdUserDirs = createdUserDirs();
 
         genConfig();
+
+        if (!couldSetStream) {
+            try {
+                System.setOut(new PrintStream(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + "latest.out")));
+                System.setErr(new PrintStream(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + "latest.err")));
+            } catch (FileNotFoundException e) {
+                System.exit(1);
+            }
+
+        }
 
         // Show main window
         MainWindow.showOverlay();
