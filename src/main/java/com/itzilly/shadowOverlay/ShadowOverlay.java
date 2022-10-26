@@ -9,9 +9,18 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 public class ShadowOverlay {
-    public static void main(String[] args) throws Exception {
-        System.setOut(new PrintStream(new FileOutputStream("latest.out")));
-        System.setErr(new PrintStream(new FileOutputStream("latest.err")));
+    public static void main(String[] args) {
+        try {
+            System.setOut(new PrintStream(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + "latest.out")));
+            System.setErr(new PrintStream(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + "latest.err")));
+        } catch (IOException e) {
+            if (e.getMessage().endsWith("(The system cannot find the path specified)")) {
+                boolean firstTime = true;
+            }
+            e.printStackTrace();
+        }
+
+        boolean createdUserDirs = createdUserDirs();
 
         genConfig();
 
@@ -20,12 +29,7 @@ public class ShadowOverlay {
     }
 
     private static void genConfig() {
-        File configDir = new File("config/");
-        if (!configDir.exists()) {
-            boolean wasMade = configDir.mkdir();
-        }
-
-        File configFile = new File("config/config.properties");
+        File configFile = new File(Constants.APPDATA_PATH() + File.separator + "config.properties");
         if (configFile.exists()) {
             return;
         }
@@ -35,10 +39,24 @@ public class ShadowOverlay {
         writeIni.put("GENERAL", "API_KEY", "");
         writeIni.put("GENERAL", "LOG_PATH", "");
         try {
-            writeIni.store(new FileOutputStream("config/config.properties"));
+            writeIni.store(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + "config.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
+
+    private static boolean createdUserDirs() {
+        String programDirectoryPath = Constants.APPDATA_PATH();
+
+        File appdataPath = new File(programDirectoryPath);
+        boolean wasCreated = false;
+
+        if (!(appdataPath.exists())) {
+            wasCreated = appdataPath.mkdirs();
+        }
+
+        return wasCreated;
+    }
+
+
 }
