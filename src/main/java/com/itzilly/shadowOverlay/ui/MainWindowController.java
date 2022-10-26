@@ -39,8 +39,8 @@ public class MainWindowController implements Initializable {
     public TextField txtbxLogPath;
     @FXML
     public Button btnStop;
-    private final String config_path = "config/config.properties";
 
+    private final String configFilename = "config.properties";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -59,7 +59,7 @@ public class MainWindowController implements Initializable {
     private void loadConfig() {
         readIni = new Ini();
         try {
-            readIni.load(new FileReader(config_path));
+            readIni.load(new FileReader(Constants.APPDATA_PATH() + File.separator + configFilename));
         } catch (IOException e) {
             e.printStackTrace();
             log_path = "";
@@ -78,7 +78,7 @@ public class MainWindowController implements Initializable {
         writeIni.put("GENERAL", "API_KEY", txtbxApiKey.getText().strip());
         writeIni.put("GENERAL", "LOG_PATH", txtbxLogPath.getText().replace('\\', '/').replace("\"", ""));
         try {
-            writeIni.store(new FileOutputStream(config_path));
+            writeIni.store(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + configFilename));
             System.out.println("Written!");
         } catch (IOException e) {
             throw new RuntimeException(e);

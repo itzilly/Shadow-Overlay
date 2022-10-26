@@ -111,7 +111,7 @@ public class LogTailer implements Runnable {
             Ini writeIni = new Ini();
             writeIni.put("GENERAL", "API_KEY", key);
             try {
-                writeIni.store(new FileOutputStream("config/config.properties"));
+                writeIni.store(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + "config.properties"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
