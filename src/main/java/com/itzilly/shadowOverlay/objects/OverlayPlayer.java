@@ -2,10 +2,13 @@ package com.itzilly.shadowOverlay.objects;
 
 import com.itzilly.shadowOverlay.Constants;
 import me.kbrewster.exceptions.APIException;
+import me.kbrewster.exceptions.InvalidPlayerException;
 import me.kbrewster.hypixelapi.HypixelAPI;
 import me.kbrewster.hypixelapi.player.HypixelPlayer;
+import me.kbrewster.hypixelapi.player.stats.bedwars.Bedwars;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.UUID;
 
 public class OverlayPlayer {
@@ -17,81 +20,98 @@ public class OverlayPlayer {
     private double wlr;
     private double bblr;
     private long winstreak;
+    private float index;
 
-    public OverlayPlayer(String name) throws APIException, IOException {
-        // TODO: Improve Memory Efficiency (use int instead of long)
-
+    public OverlayPlayer(String name) throws APIException, IOException, InvalidPlayerException {
         this.name = name;
         HypixelAPI hypixelAPI = new HypixelAPI(Constants.API_KEY);
-        String uuidPattern = "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)";
         HypixelPlayer hypixelPlayer = hypixelAPI.getPlayer(name);
-        this.uuid = UUID.fromString(hypixelPlayer.getUuid().replaceFirst(uuidPattern, "$1-$2-$3-$4-$5"));
-        this.bedwarsLevel = hypixelPlayer.getAchievements().getBedwarsLevel();
-        this.finalKills = hypixelPlayer.getStats().getBedwars().getFinalKillsBedwars();
-        long finalDeaths = hypixelPlayer.getStats().getBedwars().getFinalDeathsBedwars();
-        // TODO: Optimize (if finalDeaths == 1 fkdr = finalKills) for ALL below
-        if (finalDeaths == 0) {
-            finalDeaths = 1L;
-        }
-        this.fkdr = (double) (this.finalKills / finalDeaths);
-        long wins = hypixelPlayer.getStats().getBedwars().getWinsBedwars();
-        long losses = hypixelPlayer.getStats().getBedwars().getLossesBedwars();
-        if (losses == 0) {
-            losses = 1;
-        }
-        this.wlr = (double) (wins / losses);
-        long bedBreaks = hypixelPlayer.getStats().getBedwars().getBedsBrokenBedwars();
-        long bedLosses = hypixelPlayer.getStats().getBedwars().getBedsLostBedwars();
-        if  (bedLosses == 0) {
-            bedLosses = 1L;
-        }
-        this.bblr = (double) (bedBreaks / bedLosses);
-        this.winstreak = hypixelPlayer.getStats().getBedwars().getWinstreak();
 
+        Bedwars bwStats = hypixelPlayer.getStats().getBedwars();
+
+
+        // Set Stats
+        this.uuid = stringToUuid(hypixelPlayer.getUuid());
+        this.bedwarsLevel = hypixelPlayer.getAchievements().getBedwarsLevel();
+        this.winstreak = bwStats.getWinstreak();
+
+        this.finalKills = bwStats.getFinalKillsBedwars();
+        long finalDeaths = bwStats.getFinalDeathsBedwars();
+        this.fkdr = getRatio(this.finalKills, finalDeaths);
+
+        long wins = bwStats.getWinsBedwars();
+        long losses = bwStats.getLossesBedwars();
+        this.wlr = getRatio(wins, losses);
+
+        long bedsBroken = bwStats.getBedsBrokenBedwars();
+        long bedsLost = bwStats.getBedsLostBedwars();
+        this.bblr = getRatio(bedsBroken, bedsLost);
+
+        float dx;
+        dx = (float) (fkdr * fkdr);
+        dx = bedwarsLevel * dx;
+        dx = dx / 10;
+
+        this.index = Float.parseFloat(new DecimalFormat("#.##").format(dx));
+
+
+        // Handle Cache
         if (Constants.UUID_CACHE.containsKey(name)) {
             Constants.UUID_CACHE.replace(name, uuid);
         } else {
             Constants.UUID_CACHE.put(name, uuid);
         }
-
     }
 
-    public OverlayPlayer(UUID uuid) throws APIException, IOException {
-        // TODO: Improve Memory Efficiency (use int instead of long)
+    public OverlayPlayer(UUID uuid) throws APIException, IOException, InvalidPlayerException {
+        this.uuid = uuid;
 
         HypixelAPI hypixelAPI = new HypixelAPI(Constants.API_KEY);
-        String uuidPattern = "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)";
         HypixelPlayer hypixelPlayer = hypixelAPI.getPlayer(uuid);
-        this.uuid = UUID.fromString(hypixelPlayer.getUuid().replaceFirst(uuidPattern, "$1-$2-$3-$4-$5"));
+
+        Bedwars bwStats = hypixelPlayer.getStats().getBedwars();
+
+
+        // Set Stats
         this.name = hypixelPlayer.getDisplayname();
         this.bedwarsLevel = hypixelPlayer.getAchievements().getBedwarsLevel();
-        this.finalKills = hypixelPlayer.getStats().getBedwars().getFinalKillsBedwars();
-        long finalDeaths = hypixelPlayer.getStats().getBedwars().getFinalDeathsBedwars();
-        // TODO: Optimize (if finalDeaths == 1 fkdr = finalKills) for ALL below
-        if (finalDeaths == 0) {
-            finalDeaths = 1L;
-        }
-        this.fkdr = (double) (this.finalKills / finalDeaths);
-        long wins = hypixelPlayer.getStats().getBedwars().getWinsBedwars();
-        long losses = hypixelPlayer.getStats().getBedwars().getLossesBedwars();
-        if (losses == 0) {
-            losses = 1;
-        }
-        this.wlr = (double) (wins / losses);
-        long bedBreaks = hypixelPlayer.getStats().getBedwars().getBedsBrokenBedwars();
-        long bedLosses = hypixelPlayer.getStats().getBedwars().getBedsLostBedwars();
-        if  (bedLosses == 0) {
-            bedLosses = 1L;
-        }
-        this.bblr = (double) (bedBreaks / bedLosses);
-        this.winstreak = hypixelPlayer.getStats().getBedwars().getWinstreak();
+        this.winstreak = bwStats.getWinstreak();
 
+        this.finalKills = bwStats.getFinalKillsBedwars();
+        long finalDeaths = bwStats.getFinalDeathsBedwars();
+        this.fkdr = getRatio(this.finalKills, finalDeaths);
+
+        long wins = bwStats.getWinsBedwars();
+        long losses = bwStats.getLossesBedwars();
+        this.wlr = getRatio(wins, losses);
+
+        long bedsBroken = bwStats.getBedsBrokenBedwars();
+        long bedsLost = bwStats.getBedsLostBedwars();
+        this.bblr = getRatio(bedsBroken, bedsLost);
+
+        float dx;
+        dx = (float) (fkdr * fkdr);
+        dx = bedwarsLevel * dx;
+        dx = dx / 10;
+
+        this.index = Float.parseFloat(new DecimalFormat("#.##").format(dx));
+
+
+        // Handle Cache
         if (Constants.UUID_CACHE.containsKey(name)) {
             Constants.UUID_CACHE.replace(name, uuid);
         } else {
             Constants.UUID_CACHE.put(name, uuid);
         }
+    }
 
+    private UUID stringToUuid(String uuid) {
+        String uuidPattern = "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)";
+        return UUID.fromString(uuid.replaceFirst(uuidPattern, "$1-$2-$3-$4-$5"));
+    }
+
+    private double getRatio(long top, long bottom) {
+        return ((double) top / bottom);
     }
 
     public String getName() {
@@ -125,4 +145,5 @@ public class OverlayPlayer {
     public long getWinstreak() {
         return winstreak;
     }
+    public float getIndex() { return index; }
 }
