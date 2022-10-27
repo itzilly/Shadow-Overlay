@@ -21,6 +21,7 @@ public class OverlayPlayer {
     private double bblr;
     private long winstreak;
     private float index;
+    private long wins;
 
     public OverlayPlayer(String name) throws APIException, IOException, InvalidPlayerException {
         this.name = name;
@@ -39,7 +40,7 @@ public class OverlayPlayer {
         long finalDeaths = bwStats.getFinalDeathsBedwars();
         this.fkdr = getRatio(this.finalKills, finalDeaths);
 
-        long wins = bwStats.getWinsBedwars();
+        this.wins = bwStats.getWinsBedwars();
         long losses = bwStats.getLossesBedwars();
         this.wlr = getRatio(wins, losses);
 
@@ -146,4 +147,8 @@ public class OverlayPlayer {
         return winstreak;
     }
     public float getIndex() { return index; }
+
+    public long getWins() {
+        return wins;
+    }
 }
