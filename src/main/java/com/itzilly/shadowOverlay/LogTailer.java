@@ -89,6 +89,10 @@ public class LogTailer implements Runnable {
     }
 
     private void parseLine(String currentLine) {
+        if (currentLine.length() < 12) {
+            return;
+        }
+
         String content = currentLine.substring(11);
 
         // Online Message
