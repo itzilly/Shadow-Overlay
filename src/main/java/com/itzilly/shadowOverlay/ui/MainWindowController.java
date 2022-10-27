@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
@@ -31,6 +32,8 @@ public class MainWindowController implements Initializable {
     public TableColumn<OverlayPlayer, String> playerColumn;
     @FXML
     public TableColumn<OverlayPlayer, Integer> starsColumn;
+    @FXML
+    public TableColumn<OverlayPlayer, Double> indexColumn;
     @FXML
     public Button btnStart;
     @FXML
@@ -50,6 +53,7 @@ public class MainWindowController implements Initializable {
         // Note: "Name" below corresponds to the variable name WITHIN THE CLASS (this.name), this is NOT the name of the column title!
         playerColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, String>("name"));
         starsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Integer>("bedwarsLevel"));
+        indexColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Double>("index"));
 
         txtbxApiKey.setText(api_key);
         txtbxLogPath.setText(log_path);
@@ -129,7 +133,22 @@ public class MainWindowController implements Initializable {
     public void addPlayerToList(OverlayPlayer overlayPlayer) {
         ObservableList<OverlayPlayer> playersList = myTableView.getItems();
         playersList.add(overlayPlayer);
+        playersList.sort(comparatorOverlayPlayer_byStar);
         myTableView.setItems(playersList);
     }
+
+    Comparator<? super OverlayPlayer> comparatorOverlayPlayer_byStar = new Comparator<OverlayPlayer>() {
+        @Override
+        public int compare(OverlayPlayer o1, OverlayPlayer o2) {
+            double o1Stat = o1.getIndex();
+            double o2Stat = o2.getIndex();
+
+            if(o1Stat == o2Stat) return 1;
+            if(o1Stat > o2Stat)
+                return 0;
+            else
+                return 1;
+        }
+    };
 
 }
