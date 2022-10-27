@@ -6,6 +6,7 @@ import com.itzilly.shadowOverlay.ui.MainWindow;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import me.kbrewster.exceptions.APIException;
+import me.kbrewster.exceptions.InvalidPlayerException;
 import org.ini4j.Ini;
 
 import java.io.*;
@@ -136,13 +137,19 @@ public class LogTailer implements Runnable {
             if (e.getMessage().equals(Constants.RECENTLY_SEARCHED_ERMSG)) {
                 UUID playerUuid = Constants.UUID_CACHE.get(playerName);
                 // TODO: Make Mojang API call if name is null (not in cache)
+                if (playerUuid == null) {
+                    return;
+                }
                 try {
                     MainWindow.getMainController().addPlayerToList(new OverlayPlayer(playerUuid));
                 } catch (APIException | IOException ex) {
-                    throw new RuntimeException(ex);
+                    ex.printStackTrace();
                 }
 
             }
+        } catch (InvalidPlayerException exc) {
+            exc.printStackTrace();
+            System.out.println(exc.getMessage());
         }
     }
 
