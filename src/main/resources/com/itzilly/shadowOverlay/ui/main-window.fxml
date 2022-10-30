@@ -7,20 +7,24 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="426.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.itzilly.shadowOverlay.ui.MainWindowController">
+<AnchorPane prefHeight="490.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.itzilly.shadowOverlay.ui.MainWindowController">
     <children>
-        <TableView fx:id="myTableView" layoutX="14.0" layoutY="9.0" prefHeight="293.0" prefWidth="571.0">
+        <TableView fx:id="myTableView" layoutX="14.0" layoutY="9.0" prefHeight="348.0" prefWidth="571.0">
             <columns>
-                <TableColumn fx:id="playerColumn" prefWidth="183.0" text="Name" />
-            <TableColumn fx:id="indexColumn" prefWidth="141.0" text="Index" />
-                <TableColumn fx:id="starsColumn" minWidth="0.0" prefWidth="233.0" text="Bedwars Stars" />
+                <TableColumn fx:id="playerColumn" prefWidth="115.0" text="Name" />
+                <TableColumn fx:id="starsColumn" minWidth="0.0" prefWidth="51.0" text="Stars" />
+            <TableColumn fx:id="indexColumn" prefWidth="70.0" text="Index" />
+            <TableColumn fx:id="finalKillsColumn" minWidth="0.0" prefWidth="92.0" text="Final Kills" />
+            <TableColumn fx:id="winsColumn" prefWidth="55.0" text="Wins" />
+            <TableColumn fx:id="winLossRatioColumn" prefWidth="66.0" text="WLR" />
+            <TableColumn fx:id="winstreakColumn" prefWidth="120.0" text="Winstreak" />
             </columns>
         </TableView>
-        <Label layoutX="14.0" layoutY="334.0" text="API Key" />
-        <Button fx:id="btnStart" layoutX="434.0" layoutY="330.0" mnemonicParsing="false" onAction="#onBtnStartAction" prefHeight="25.0" prefWidth="152.0" text="Start" />
-        <TextField fx:id="txtbxApiKey" layoutX="57.0" layoutY="330.0" prefHeight="25.0" prefWidth="243.0" />
-        <TextField fx:id="txtbxLogPath" layoutX="57.0" layoutY="367.0" prefHeight="25.0" prefWidth="243.0" />
-        <Label layoutX="3.0" layoutY="372.0" text="Log Path" />
-        <Button fx:id="btnStop" layoutX="434.0" layoutY="368.0" mnemonicParsing="false" onAction="#onBtnStopAction" prefHeight="25.0" prefWidth="152.0" text="Stop" />
+        <Label layoutX="14.0" layoutY="385.0" text="API Key" />
+        <Button fx:id="btnStart" layoutX="434.0" layoutY="377.0" mnemonicParsing="false" onAction="#onBtnStartAction" prefHeight="25.0" prefWidth="152.0" text="Start" />
+        <TextField fx:id="txtbxApiKey" layoutX="57.0" layoutY="381.0" prefHeight="25.0" prefWidth="243.0" />
+        <TextField fx:id="txtbxLogPath" layoutX="57.0" layoutY="418.0" prefHeight="25.0" prefWidth="243.0" />
+        <Label layoutX="3.0" layoutY="422.0" text="Log Path" />
+        <Button fx:id="btnStop" layoutX="434.0" layoutY="415.0" mnemonicParsing="false" onAction="#onBtnStopAction" prefHeight="25.0" prefWidth="152.0" text="Stop" />
     </children>
 </AnchorPane>

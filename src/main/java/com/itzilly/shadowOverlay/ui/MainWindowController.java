@@ -35,6 +35,14 @@ public class MainWindowController implements Initializable {
     @FXML
     public TableColumn<OverlayPlayer, Double> indexColumn;
     @FXML
+    public TableColumn<OverlayPlayer, Long> finalKillsColumn;
+    @FXML
+    public TableColumn<OverlayPlayer, Long> winsColumn;
+    @FXML
+    public TableColumn<OverlayPlayer, Double> winLossRatioColumn;
+    @FXML
+    public TableColumn<OverlayPlayer, Long> winstreakColumn;
+    @FXML
     public Button btnStart;
     @FXML
     public TextField txtbxApiKey;
@@ -54,6 +62,11 @@ public class MainWindowController implements Initializable {
         playerColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, String>("name"));
         starsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Integer>("bedwarsLevel"));
         indexColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Double>("index"));
+        finalKillsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Long>("finalKills"));
+        winsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Long>("wins"));
+        winLossRatioColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Double>("wlr"));
+        winstreakColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Long>("winstreak"));
+
 
         txtbxApiKey.setText(api_key);
         txtbxLogPath.setText(log_path);
