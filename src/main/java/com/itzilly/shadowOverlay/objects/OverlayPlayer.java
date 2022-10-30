@@ -42,7 +42,7 @@ public class OverlayPlayer {
 
         this.wins = bwStats.getWinsBedwars();
         long losses = bwStats.getLossesBedwars();
-        this.wlr = Float.parseFloat(new DecimalFormat("0.00").format(getRatio(wins, losses)));
+        this.wlr = Double.parseDouble(new DecimalFormat("0.00").format(getRatio(wins, losses)));
 
         long bedsBroken = bwStats.getBedsBrokenBedwars();
         long bedsLost = bwStats.getBedsLostBedwars();
@@ -84,7 +84,7 @@ public class OverlayPlayer {
 
         long wins = bwStats.getWinsBedwars();
         long losses = bwStats.getLossesBedwars();
-        this.wlr = Float.parseFloat(new DecimalFormat("0.00").format(getRatio(wins, losses)));
+        this.wlr = Double.parseDouble(new DecimalFormat("0.00").format(getRatio(wins, losses)));
 
         long bedsBroken = bwStats.getBedsBrokenBedwars();
         long bedsLost = bwStats.getBedsLostBedwars();
@@ -146,9 +146,8 @@ public class OverlayPlayer {
     public long getWinstreak() {
         return winstreak;
     }
+
     public float getIndex() { return index; }
 
-    public long getWins() {
-        return wins;
-    }
+    public long getWins() { return wins; }
 }
