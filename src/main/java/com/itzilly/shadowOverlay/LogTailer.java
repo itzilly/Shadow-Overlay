@@ -59,20 +59,27 @@ public class LogTailer implements Runnable {
         }
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader(Constants.LOG_LOCATION));
-        LocalTime timeOpened = LocalTime.now();
-        boolean hasProcessed = false;
+
+        boolean isCounting = true;
+        int linesCount = 0;
+        while (isCounting) {
+            String line = bufferedReader.readLine();
+            if (line != null) {
+                linesCount += 1;
+            } else {
+                isCounting = false;
+            }
+        }
+
+        int lineNumber = 0;
 
         while (shouldRun) {
             String currentLine = bufferedReader.readLine();
             if (currentLine != null) {
-                if (hasProcessed) {
+                if (lineNumber < linesCount) {
                     parseLine(currentLine);
                 } else {
-                    LocalTime timeNow = LocalTime.now();
-                    long duration = Duration.between(timeOpened, timeNow).getSeconds();
-                    if (duration > 3) {
-                        hasProcessed = true;
-                    }
+                    lineNumber += 1;
                 }
                 continue;
             }
