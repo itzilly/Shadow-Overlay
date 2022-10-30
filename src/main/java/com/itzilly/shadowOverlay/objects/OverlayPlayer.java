@@ -42,7 +42,7 @@ public class OverlayPlayer {
 
         this.wins = bwStats.getWinsBedwars();
         long losses = bwStats.getLossesBedwars();
-        this.wlr = getRatio(wins, losses);
+        this.wlr = Float.parseFloat(new DecimalFormat("0.00").format(getRatio(wins, losses)));
 
         long bedsBroken = bwStats.getBedsBrokenBedwars();
         long bedsLost = bwStats.getBedsLostBedwars();
@@ -53,7 +53,7 @@ public class OverlayPlayer {
         dx = bedwarsLevel * dx;
         dx = dx / 10;
 
-        this.index = Float.parseFloat(new DecimalFormat("#.##").format(dx));
+        this.index = Float.parseFloat(new DecimalFormat("0.00").format(dx));
 
 
         // Handle Cache
@@ -84,7 +84,7 @@ public class OverlayPlayer {
 
         long wins = bwStats.getWinsBedwars();
         long losses = bwStats.getLossesBedwars();
-        this.wlr = getRatio(wins, losses);
+        this.wlr = Float.parseFloat(new DecimalFormat("0.00").format(getRatio(wins, losses)));
 
         long bedsBroken = bwStats.getBedsBrokenBedwars();
         long bedsLost = bwStats.getBedsLostBedwars();
@@ -95,7 +95,7 @@ public class OverlayPlayer {
         dx = bedwarsLevel * dx;
         dx = dx / 10;
 
-        this.index = Float.parseFloat(new DecimalFormat("#.##").format(dx));
+        this.index = Float.parseFloat(new DecimalFormat("0.00").format(dx));
 
 
         // Handle Cache
@@ -131,7 +131,7 @@ public class OverlayPlayer {
         return fkdr;
     }
 
-    public long getFinaKills() {
+    public long getFinalKills() {
         return finalKills;
     }
 
