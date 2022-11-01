@@ -145,6 +145,9 @@ public class MainWindowController implements Initializable {
 
     public void addPlayerToList(OverlayPlayer overlayPlayer) {
         ObservableList<OverlayPlayer> playersList = myTableView.getItems();
+        if (playersList.contains(overlayPlayer)) {
+            return;
+        }
         playersList.add(overlayPlayer);
         playersList.sort(comparatorOverlayPlayer_byStar);
         myTableView.setItems(playersList);
