@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import me.kbrewster.exceptions.APIException;
 import me.kbrewster.exceptions.InvalidPlayerException;
+import me.kbrewster.mojangapi.MojangAPI;
 import org.ini4j.Ini;
 
 import java.io.*;
@@ -94,11 +95,11 @@ public class LogTailer implements Runnable {
     }
 
     private void parseLine(String currentLine) {
-        if (currentLine.length() < 12) {
+        if (currentLine.length() < 34) {
             return;
         }
 
-        String content = currentLine.substring(11);
+        String content = currentLine.substring(33);
 
         // Online Message
         if (content.startsWith(Constants.LIST_MESSAGE_PREFIX)) {
@@ -145,7 +146,14 @@ public class LogTailer implements Runnable {
             // Looked up too recently
             if (e.getMessage().equals(Constants.RECENTLY_SEARCHED_ERMSG)) {
                 UUID playerUuid = Constants.UUID_CACHE.get(playerName);
-                // TODO: Make Mojang API call if name is null (not in cache)
+                if (playerUuid == null) {
+                    try {
+                        UUID newPlayerUuid = MojangAPI.getUUID(playerName);
+                        MainWindow.getMainController().addPlayerToList(new OverlayPlayer(newPlayerUuid));
+                    } catch (APIException | IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
                 if (playerUuid == null) {
                     return;
                 }
