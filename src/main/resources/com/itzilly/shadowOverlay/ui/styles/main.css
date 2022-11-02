@@ -1,0 +1,54 @@
+.root {
+    -fx-background-color: #063970 ;
+}
+
+.button {
+    -fx-text-fill: #eeeee4 ;
+    -fx-background-color: #1e81b0 ;
+}
+
+.label {
+    -fx-text-fill: #eeeee4 ;
+}
+
+.text-field {
+    -fx-text-fill: #eeeee4 ;
+    -fx-background-color: #154c79 ;
+}
+
+#myTableView {
+    -fx-background-color: #154c79 ;
+}
+
+#playerColumn {
+    -fx-background-color: #154c79;
+    -fx-text-fill: #eeeee4 ;
+}
+#starsColumn {
+    -fx-background-color: #154c79;
+    -fx-text-fill: #eeeee4 ;
+}
+#indexColumn {
+    -fx-background-color: #154c79;
+    -fx-text-fill: #eeeee4 ;
+}
+#fkdrColumn {
+    -fx-background-color: #154c79;
+    -fx-text-fill: #eeeee4 ;
+}
+#finalKillsColumn {
+    -fx-background-color: #154c79;
+    -fx-text-fill: #eeeee4 ;
+}
+#winsColumn {
+    -fx-background-color: #154c79;
+    -fx-text-fill: #eeeee4 ;
+}
+#winLossRatioColumn {
+    -fx-background-color: #154c79;
+    -fx-text-fill: #eeeee4 ;
+}
+#winstreakColumn {
+    -fx-background-color: #154c79;
+    -fx-text-fill: #eeeee4 ;
+}

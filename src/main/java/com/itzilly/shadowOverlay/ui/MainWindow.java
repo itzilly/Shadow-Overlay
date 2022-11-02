@@ -15,6 +15,7 @@ public class MainWindow extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("main-window.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(String.valueOf(MainWindow.class.getResource("styles/main.css")));
         mainWindowController = fxmlLoader.getController();
         stage.setScene(scene);
         stage.setResizable(false);

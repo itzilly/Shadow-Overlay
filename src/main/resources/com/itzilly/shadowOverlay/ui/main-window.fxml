@@ -22,10 +22,10 @@
             </columns>
         </TableView>
         <Label layoutX="14.0" layoutY="385.0" text="API Key" />
-        <Button fx:id="btnStart" layoutX="434.0" layoutY="377.0" mnemonicParsing="false" onAction="#onBtnStartAction" prefHeight="25.0" prefWidth="152.0" text="Start" />
-        <TextField fx:id="txtbxApiKey" layoutX="57.0" layoutY="381.0" prefHeight="25.0" prefWidth="243.0" />
-        <TextField fx:id="txtbxLogPath" layoutX="57.0" layoutY="418.0" prefHeight="25.0" prefWidth="243.0" />
         <Label layoutX="3.0" layoutY="422.0" text="Log Path" />
-        <Button fx:id="btnStop" layoutX="434.0" layoutY="415.0" mnemonicParsing="false" onAction="#onBtnStopAction" prefHeight="25.0" prefWidth="152.0" text="Stop" />
+        <TextField fx:id="txtbxApiKey" layoutX="57.0" layoutY="381.0" prefHeight="25.0" prefWidth="353.0" />
+        <TextField fx:id="txtbxLogPath" layoutX="57.0" layoutY="418.0" prefHeight="25.0" prefWidth="353.0" />
+        <Button fx:id="btnStart" layoutX="434.0" layoutY="381.0" mnemonicParsing="false" onAction="#onBtnStartAction" prefHeight="25.0" prefWidth="152.0" text="Start" />
+        <Button fx:id="btnStop" layoutX="434.0" layoutY="418.0" mnemonicParsing="false" onAction="#onBtnStopAction" prefHeight="25.0" prefWidth="152.0" text="Stop" />
     </children>
 </AnchorPane>
