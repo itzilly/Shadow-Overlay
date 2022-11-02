@@ -38,7 +38,7 @@ public class OverlayPlayer {
 
         this.finalKills = bwStats.getFinalKillsBedwars();
         long finalDeaths = bwStats.getFinalDeathsBedwars();
-        this.fkdr = getRatio(this.finalKills, finalDeaths);
+        this.fkdr = Double.parseDouble(new DecimalFormat("0.00").format(getRatio(this.finalKills, finalDeaths)));
 
         this.wins = bwStats.getWinsBedwars();
         long losses = bwStats.getLossesBedwars();
@@ -80,7 +80,7 @@ public class OverlayPlayer {
 
         this.finalKills = bwStats.getFinalKillsBedwars();
         long finalDeaths = bwStats.getFinalDeathsBedwars();
-        this.fkdr = getRatio(this.finalKills, finalDeaths);
+        this.fkdr = Double.parseDouble(new DecimalFormat("0.00").format(getRatio(this.finalKills, finalDeaths)));
 
         long wins = bwStats.getWinsBedwars();
         long losses = bwStats.getLossesBedwars();
