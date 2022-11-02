@@ -15,9 +15,9 @@ public class Constants {
     public static String LOG_LOCATION = null;
     public static String API_KEY = null;
 
-    public static String LIST_MESSAGE_PREFIX = "[Client thread/INFO]: [CHAT] ONLINE: ";
-    public static String PLAYER_QUERY_PREFIX = "[Client thread/INFO]: [CHAT] Can't find a player by the name of '.";
-    public static String NEW_KEY_PREFIX = "[Client thread/INFO]: [CHAT] Your new API key is ";
+    public static String LIST_MESSAGE_PREFIX = "[CHAT] ONLINE: ";
+    public static String PLAYER_QUERY_PREFIX = "[CHAT] Can't find a player by the name of '.";
+    public static String NEW_KEY_PREFIX = "[CHAT] Your new API key is ";
 
     public static LogTailer LOG_TAILER = null;
     public static Thread LOG_TAILER_THREAD = null;
