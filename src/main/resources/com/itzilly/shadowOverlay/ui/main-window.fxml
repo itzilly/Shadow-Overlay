@@ -14,6 +14,7 @@
                 <TableColumn fx:id="playerColumn" prefWidth="115.0" text="Name" />
                 <TableColumn fx:id="starsColumn" minWidth="0.0" prefWidth="51.0" text="Stars" />
             <TableColumn fx:id="indexColumn" prefWidth="70.0" text="Index" />
+            <TableColumn fx:id="fkdrColumn" prefWidth="75.0" text="FKDR" />
             <TableColumn fx:id="finalKillsColumn" minWidth="0.0" prefWidth="92.0" text="Final Kills" />
             <TableColumn fx:id="winsColumn" prefWidth="55.0" text="Wins" />
             <TableColumn fx:id="winLossRatioColumn" prefWidth="66.0" text="WLR" />
