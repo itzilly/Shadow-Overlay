@@ -34,6 +34,9 @@ public class MainWindowController implements Initializable {
     public TableColumn<OverlayPlayer, Integer> starsColumn;
     @FXML
     public TableColumn<OverlayPlayer, Double> indexColumn;
+    
+    @FXML
+    TableColumn<OverlayPlayer, Double> fkdrColumn;
     @FXML
     public TableColumn<OverlayPlayer, Long> finalKillsColumn;
     @FXML
@@ -62,6 +65,7 @@ public class MainWindowController implements Initializable {
         playerColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, String>("name"));
         starsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Integer>("bedwarsLevel"));
         indexColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Double>("index"));
+        fkdrColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Double>("fkdr"));
         finalKillsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Long>("finalKills"));
         winsColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Long>("wins"));
         winLossRatioColumn.setCellValueFactory(new PropertyValueFactory<OverlayPlayer, Double>("wlr"));
