@@ -44,6 +44,7 @@ public class ShadowOverlay {
         Ini writeIni = new Ini();
         writeIni.put("GENERAL", "API_KEY", "");
         writeIni.put("GENERAL", "LOG_PATH", "");
+        writeIni.put("PREFERENCES", "STYLESHEET", "");
         try {
             writeIni.store(new FileOutputStream(Constants.APPDATA_PATH() + File.separator + "config.properties"));
         } catch (IOException e) {
@@ -53,12 +54,18 @@ public class ShadowOverlay {
 
     private static boolean createdUserDirs() {
         String programDirectoryPath = Constants.APPDATA_PATH();
+        String themeDirectoryPath = Constants.APPDATA_PATH() + File.separator + "themes";
 
         File appdataPath = new File(programDirectoryPath);
         boolean wasCreated = false;
 
         if (!(appdataPath.exists())) {
             wasCreated = appdataPath.mkdirs();
+        }
+
+        File themesPath = new File(themeDirectoryPath);
+        if (!(themesPath.exists())) {
+            wasCreated = themesPath.mkdirs();
         }
 
         return wasCreated;
