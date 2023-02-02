@@ -22,6 +22,7 @@ public class OverlayPlayer {
     private long winstreak;
     private float index;
     private long wins;
+    private Boolean isNicked;
 
     public OverlayPlayer(String name) throws APIException, IOException, InvalidPlayerException {
         this.name = name;
@@ -150,4 +151,12 @@ public class OverlayPlayer {
     public float getIndex() { return index; }
 
     public long getWins() { return wins; }
+
+    public Boolean getNicked() {
+        return isNicked;
+    }
+
+    public void setNicked(Boolean nicked) {
+        isNicked = nicked;
+    }
 }
