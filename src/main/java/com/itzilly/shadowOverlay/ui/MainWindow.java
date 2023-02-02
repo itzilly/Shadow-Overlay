@@ -2,6 +2,7 @@ package com.itzilly.shadowOverlay.ui;
 
 import com.itzilly.shadowOverlay.Constants;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,7 +24,7 @@ public class MainWindow extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         String userStyleSheet = getUserStylesheet();
         if (userStyleSheet != null) {
-            scene.getStylesheets().add(String.valueOf(getUserStylesheet()));
+            scene.getStylesheets().add(getUserStylesheet());
         } else {
             scene.getStylesheets().add(String.valueOf(MainWindow.class.getResource("styles/main.css")));
         }
@@ -31,6 +32,7 @@ public class MainWindow extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle(Constants.WINDOW_TITLE);
+        stage.setOnCloseRequest(e -> Platform.exit());
         stage.show();
     }
 
