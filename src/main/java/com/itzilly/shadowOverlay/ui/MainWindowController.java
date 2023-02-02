@@ -1,13 +1,20 @@
 package com.itzilly.shadowOverlay.ui;
 
 import com.itzilly.shadowOverlay.*;
+import com.itzilly.shadowOverlay.objects.BedwarsPlayerStats;
+import com.itzilly.shadowOverlay.objects.NickedPlayer;
 import com.itzilly.shadowOverlay.objects.OverlayPlayer;
+import com.itzilly.shadowOverlay.ui.statsControllers.BedwarsStatsController;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import org.ini4j.Ini;
 
 import java.io.File;
@@ -24,6 +31,8 @@ public class MainWindowController implements Initializable {
     private Ini writeIni;
     private String log_path;
     private String api_key;
+
+    private ObservableList<OverlayPlayer> playersList;
 
 
     @FXML
@@ -75,7 +84,20 @@ public class MainWindowController implements Initializable {
         txtbxApiKey.setText(api_key);
         txtbxLogPath.setText(log_path);
 
+        playersList = myTableView.getItems();
     }
+
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        loadConfig();
+//        btnStop.setVisible(false);
+//
+//        txtbxApiKey.setText(api_key);
+//        txtbxLogPath.setText(log_path);
+//
+//        playersList = myTableView.getItems();
+//        BedwarsStatsController bedwarsStatsController = new BedwarsStatsController();
+//    }
 
     private void loadConfig() {
         readIni = new Ini();
@@ -148,13 +170,20 @@ public class MainWindowController implements Initializable {
     }
 
     public void addPlayerToList(OverlayPlayer overlayPlayer) {
-        ObservableList<OverlayPlayer> playersList = myTableView.getItems();
         if (playersList.contains(overlayPlayer)) {
             return;
         }
         playersList.add(overlayPlayer);
         playersList.sort(comparatorOverlayPlayer_byStar);
         myTableView.setItems(playersList);
+    }
+
+    public void removePlayerFromList(String playerName) {
+        playersList.removeIf(player -> player.getName().equalsIgnoreCase(playerName));
+    }
+
+    public void addNickedPlayer(NickedPlayer nickedPlayer) {
+        playersList.add(nickedPlayer);
     }
 
     Comparator<? super OverlayPlayer> comparatorOverlayPlayer_byStar = new Comparator<OverlayPlayer>() {
@@ -171,4 +200,21 @@ public class MainWindowController implements Initializable {
         }
     };
 
+    public void onMnuItmSettings(ActionEvent actionEvent) {
+        // Open Settings Panel
+        Parent root;
+        try {
+            root = FXMLLoader.load(MainWindow.class.getResource("settings-window.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Settings");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void onMnuItmClose(ActionEvent actionEvent) {
+        // Close Shadow Overlay
+    }
 }
