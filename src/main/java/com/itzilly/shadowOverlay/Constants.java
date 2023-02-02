@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public class Constants {
 
-    public static String BUILD_NUMBER = "b25";
-    public static String VERSION = "A0.3.5";
+    public static String BUILD_NUMBER = "b26";
+    public static String VERSION = "A0.3.6";
     public static String VERSION_SHORTHAND = VERSION + "-" + BUILD_NUMBER;
     public static String WINDOW_TITLE = "Shadow Overlay " + VERSION_SHORTHAND;
 
@@ -18,9 +18,12 @@ public class Constants {
     public static String LIST_MESSAGE_PREFIX = "[CHAT] ONLINE: ";
     public static String PLAYER_QUERY_PREFIX = "[CHAT] Can't find a player by the name of '.";
     public static String NEW_KEY_PREFIX = "[CHAT] Your new API key is ";
+    public static String PLAYER_JOINED_BEDWARS_REGEX = "\\[CHAT\\]\\s[a-zA-Z0-9_]+\\shas\\sjoined\\s\\(\\d+\\/\\d+\\)!";
+    public static String PLAYER_LEFT_BEDWARS_REGEX = "\\[CHAT\\]\\s[a-zA-Z0-9_]+\\shas\\squit\\!";
 
     public static LogTailer LOG_TAILER = null;
     public static Thread LOG_TAILER_THREAD = null;
+    public static Boolean LOG_TAILER_IS_RUNNING = false;
 
     public static String RECENTLY_SEARCHED_ERMSG = "You have already looked up this name recently";
 
